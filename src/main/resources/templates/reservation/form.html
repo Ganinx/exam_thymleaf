@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${reservation.identifiant == null ? 'reservation.form.add' : 'reservation.form.edit'}"></title>
+    <div th:insert="~{common/menu :: header}"></div>
+</head>
+<body class="bg-light">
+<div th:insert="~{common/menu :: menu}"></div>
+
+<div class="container mt-5">
+    <h2 th:text="${reservation.identifiant == null ? 'reservation.form.add' : 'reservation.form.edit'}"></h2>
+
+    <!-- Notez l'ajout de th:object ici -->
+    <form th:object="${reservation}"
+          th:action="@{${reservation.identifiant == null ? '/reservations' : '/reservations/' + reservation.identifiant}}"
+          method="post"
+          class="needs-validation">
+        <div class="alert alert-danger" th:if="${#fields.hasGlobalErrors()}">
+            <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">Erreur de validation</p>
+        </div>
+
+        <input type="hidden" th:field="*{identifiant}">
+
+        <!-- Client -->
+        <div class="mb-3">
+            <label for="client" class="form-label" th:text="#{reservation.form.client}">Client</label>
+            <select class="form-select" th:field="*{client.identifiant}" id="client">
+                <option th:each="clientOpt : ${clients}"
+                        th:value="${clientOpt.identifiant}"
+                        th:text="${clientOpt.nom + ' ' + clientOpt.prenom}"></option>
+            </select>
+        </div>
+
+        <!-- Table -->
+        <div class="mb-3">
+            <label for="tableReserve" class="form-label" th:text="#{reservation.form.table}">Table</label>
+            <select class="form-select" th:field="*{tableReserve.identifiant}" id="tableReserve">
+                <option th:each="tableOpt : ${tables}"
+                        th:value="${tableOpt.identifiant}"
+                        th:text="'Table ' + ${tableOpt.identifiant}"></option>
+            </select>
+        </div>
+
+        <!-- Date et Heure -->
+        <div class="mb-3">
+            <label for="date" class="form-label" th:text="#{reservation.form.date}">Date et Heure</label>
+            <input type="datetime-local"
+                   class="form-control"
+                   th:field="*{date}"
+                   th:class="${#fields.hasErrors('date')} ? 'form-control is-invalid' : 'form-control'">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">
+                Erreur date
+            </div>
+        </div>
+
+        <!-- Nombre de Couverts -->
+        <div class="mb-3">
+            <label for="nbrCouvert" class="form-label" th:text="#{reservation.form.cover}">Nombre de Couverts</label>
+            <input type="number"
+                   class="form-control"
+                   th:field="*{nbrCouvert}"
+                   th:class="${#fields.hasErrors('nbrCouvert')} ? 'form-control is-invalid' : 'form-control'">
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('nbrCouvert')}" th:errors="*{nbrCouvert}">
+                Erreur nombre de couverts
+            </div>
+        </div>
+
+        <!-- Boutons -->
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success" th:text="#{reservation.form.submit}">
+                Enregistrer
+            </button>
+            <a href="/reservations" class="btn btn-secondary" th:text="#{reservation.form.cancel}">
+                Annuler
+            </a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

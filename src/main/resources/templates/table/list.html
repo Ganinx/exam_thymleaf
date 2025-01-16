@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{table.list.title}">Liste des tables</title>
+    <div th:insert="~{common/menu :: header}"></div>
+</head>
+
+<body class="bg-light">
+<div th:insert="~{common/menu :: menu}"></div>
+
+<a th:href="@{/tables/add}" class="btn btn-primary">
+    <i class="bi bi-plus-circle me-2" th:text="#{add}">Ajouter</i>
+</a>
+
+<div class="container mt-5">
+    <h2 th:text="#{table.list.heading}">Liste des Tables</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th th:text="#{table.list.id}">#</th>
+                <th th:text="#{table.list.number}">Numéro de Table</th>
+                <th th:text="#{table.list.places}">Nombre de Places</th>
+                <th th:text="#{table.list.status}">Statut</th>
+                <th th:text="#{table.list.actions}">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Boucle Thymeleaf pour afficher les tables -->
+            <tr th:each="table : ${tables}">
+                <td th:text="${table.identifiant}">1</td>
+                <td th:text="'Table ' + ${table.identifiant}">Table 1</td>
+                <td th:text="${table.nbrPlace}">4</td>
+                <td>
+                        <span th:classappend="${table.statut == 'disponible' ? 'bg-success' : (table.statut == 'reserve' ? 'bg-danger' : 'bg-secondary')}" class="badge">
+                            <span th:if="${table.statut == 'disponible'}" th:text="#{table.status.disponible}">Disponible</span>
+                            <span th:if="${table.statut == 'reserve'}" th:text="#{table.status.reserve}">Réservé</span>
+                            <span th:if="${table.statut == 'entretien'}" th:text="#{table.status.entretien}">En entretien</span>
+                        </span>
+                </td>
+                <td>
+                    <a th:href="@{/tables/edit/{id}(id=${table.identifiant})}" class="btn btn-warning btn-sm">
+                        <span th:text="#{table.list.edit}">Modifier</span>
+                    </a>
+                    <a th:href="@{/tables/delete/{id}(id=${table.identifiant})}" class="btn btn-danger btn-sm">
+                        <span th:text="#{table.list.delete}">Supprimer</span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <a href="form.html" class="btn btn-primary">
+        <span th:text="#{table.list.add}">Ajouter une Table</span>
+    </a>
+</div>

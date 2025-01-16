@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Header Fragment -->
+
+<head id="header">
+    <div th:fragment="header">
+        <meta charset="utf-8" />
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    </div>
+</head>
+
+<body>
+    <!-- Updated Navbar, Menu Fragment -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="menu" th:fragment="menu">
+        <div class="container">
+            <a class="navbar-brand" href="/">Le restaurant</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Left menu, site navigation -->
+                <ul class="navbar-nav me-auto">
+                    <!-- Index -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}" th:text="#{menu.index}">Index</a>
+                    </li>
+                    <!-- Car -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/tables}" th:text="#{menu.table}">Tables</a>
+                    </li>
+                    <!-- Client -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/clients}" th:text="#{menu.client}">Client</a>
+                    </li>
+                    <!-- Conctracts -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/reservations}" th:text="#{menu.reservation}">Reservations</a>
+                    </li>
+                </ul>
+                <!-- Right menu, language setting -->
+                <ul class="navbar-nav">
+                    <!-- Language: FR -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/?lang=fr}">[FR]</a>
+                    </li>
+                    <!-- Language: EN -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/?lang=en}">[EN]</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+
+</html>

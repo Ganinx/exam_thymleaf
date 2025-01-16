@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{client.list.title}">Liste des clients</title>
+    <div th:insert="~{common/menu :: header}"></div>
+</head>
+
+<body class="bg-light">
+<div th:insert="~{common/menu :: menu}"></div>
+
+<a th:href="@{/clients/add}" class="btn btn-primary">
+    <i class="bi bi-plus-circle me-2" th:text="#{add}">Ajouter</i>
+</a>
+
+<div class="container mt-5">
+    <h2 th:text="#{client.list.heading}">Liste des Clients</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th th:text="#{client.list.id}">#</th>
+                <th th:text="#{client.list.name}">Nom</th>
+                <th th:text="#{client.list.email}">Email</th>
+                <th th:text="#{client.list.phone}">Téléphone</th>
+                <th th:text="#{client.list.genre}">Genre</th>
+                <th th:text="#{client.list.vip}">VIP</th>
+                <th th:text="#{client.list.actions}">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Boucle Thymeleaf pour afficher les clients -->
+            <tr th:each="client : ${clients}">
+                <td th:text="${client.identifiant}">1</td>
+                <td th:text="${client.nom}">John Doe</td>
+                <td th:text="${client.email}">john.doe@example.com</td>
+                <td th:text="${client.telephone}">+123456789</td>
+                <td th:text="${client.genre}">Homme</td>
+                <td>
+                    <span th:if="${client.vip}" class="badge bg-success" th:text="#{client.status.vip}">VIP</span>
+                    <span th:if="${!client.vip}" class="badge bg-secondary" th:text="#{client.status.regular}">Regular</span>
+                </td>
+                <td>
+                    <a th:href="@{/clients/edit/{id}(id=${client.identifiant})}" class="btn btn-warning btn-sm">
+                        <span th:text="#{client.list.edit}">Modifier</span>
+                    </a>
+                    <a th:href="@{/clients/delete/{id}(id=${client.identifiant})}" class="btn btn-danger btn-sm">
+                        <span th:text="#{client.list.delete}">Supprimer</span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <a href="form.html" class="btn btn-primary">
+        <span th:text="#{client.list.add}">Ajouter un Client</span>
+    </a>
+</div>
+</body>
+</html>

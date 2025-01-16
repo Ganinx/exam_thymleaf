@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="#{client.form.title}">Formulaire Client</title>
+    <div th:insert="~{common/menu :: header}"></div>
+</head>
+
+<body class="bg-light">
+<div th:insert="~{common/menu :: menu}"></div>
+
+<!-- Formulaire Client -->
+<div class="container mt-5">
+    <h2 th:text="${client == null ? 'client.form.add' : 'client.form.edit'}"></h2>
+    <form th:action="@{${client == null ? '/clients' : '/clients/' + client.identifiant}}" method="post">
+        <!-- Input caché pour l'ID lors de l'édition -->
+        <input type="hidden" th:if="${client != null}" th:value="${client.identifiant}" name="id">
+
+        <div class="mb-3">
+            <label for="clientName" class="form-label" th:text="#{client.form.name}">Nom</label>
+            <input type="text" class="form-control" id="clientName" th:value="${client != null ? client.nom : ''}" name="nom" placeholder="Entrez le nom du client">
+        </div>
+
+        <div class="mb-3">
+            <label for="clientEmail" class="form-label" th:text="#{client.form.email}">Email</label>
+            <input type="email" class="form-control" id="clientEmail" th:value="${client != null ? client.email : ''}" name="email" placeholder="Entrez l'email du client">
+        </div>
+
+        <div class="mb-3">
+            <label for="clientPhone" class="form-label" th:text="#{client.form.phone}">Téléphone</label>
+            <input type="text" class="form-control" id="clientPhone" th:value="${client != null ? client.telephone : ''}" name="telephone" placeholder="Entrez le téléphone du client">
+        </div>
+
+        <div class="mb-3">
+            <label th:text="#{client.form.genre}">Genre</label><br>
+            <div>
+                <input type="radio" id="genreH" name="genre" value="H" th:checked="${client != null && client.genre == 'H'}">
+                <label for="genreH" th:text="#{client.form.genre.male}">Homme</label>
+            </div>
+            <div>
+                <input type="radio" id="genreF" name="genre" value="F" th:checked="${client != null && client.genre == 'F'}">
+                <label for="genreF" th:text="#{client.form.genre.female}">Femme</label>
+            </div>
+            <div>
+                <input type="radio" id="genreOther" name="genre" value="AUTRE" th:checked="${client != null && client.genre == 'AUTRE'}">
+                <label for="genreOther" th:text="#{client.form.genre.other}">Autre</label>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="vipCheckbox" class="form-label" th:text="#{client.form.vip}">VIP</label>
+            <input type="checkbox" id="vipCheckbox" th:checked="${client != null && client.vip}" name="vip">
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success">
+                <span th:text="#{client.form.submit}">Enregistrer</span>
+            </button>
+            <a href="/clients" class="btn btn-secondary">
+                <span th:text="#{client.form.cancel}">Annuler</span>
+            </a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

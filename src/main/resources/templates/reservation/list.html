@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{reservation.list.title}">Liste des Réservations</title>
+    <div th:insert="~{common/menu :: header}"></div>
+</head>
+<body class="bg-light">
+<div th:insert="~{common/menu :: menu}"></div>
+
+<a th:href="@{/reservations/add}" class="btn btn-primary">
+    <i class="bi bi-plus-circle me-2" th:text="#{reservation.list.add}">Ajouter</i>
+</a>
+
+<div class="container mt-5">
+    <h2 th:text="#{reservation.list.heading}">Liste des Réservations</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th th:text="#{reservation.list.id}">#</th>
+                <th th:text="#{reservation.list.client}">Client</th>
+                <th th:text="#{reservation.list.table}">Table</th>
+                <th th:text="#{reservation.list.date}">Date et Heure</th>
+                <th th:text="#{reservation.list.cover}">Nombre de Couverts</th>
+                <th th:text="#{reservation.list.actions}">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Boucle Thymeleaf pour afficher les réservations -->
+            <tr th:each="reservation : ${reservations}">
+                <td th:text="${reservation.identifiant}">1</td>
+                <td th:text="${reservation.client.nom} + ' ' + ${reservation.client.prenom}">John Doe</td>
+                <td th:text="'Table ' + ${reservation.tableReserve.identifiant}">Table 1</td>
+                <td th:text="${reservation.date}">2025-01-16 14:30</td>
+                <td th:text="${reservation.nbrCouvert}">4</td>
+                <td>
+                    <a th:href="@{/reservations/edit/{id}(id=${reservation.identifiant})}" class="btn btn-warning btn-sm">
+                        <span th:text="#{reservation.list.edit}">Modifier</span>
+                    </a>
+                    <a th:href="@{/reservations/delete/{id}(id=${reservation.identifiant})}" class="btn btn-danger btn-sm">
+                        <span th:text="#{reservation.list.delete}">Supprimer</span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
