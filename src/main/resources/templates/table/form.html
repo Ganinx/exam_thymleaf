@@ -11,15 +11,10 @@
 
 <!-- Formulaire Table -->
 <div class="container mt-5">
-    <h2 th:text="${table == null ? 'table.form.add' : 'table.form.edit'}"></h2>
-    <form th:action="@{${table == null ? '/tables' : '/tables/' + table.identifiant}}" method="post">
+    <h2 th:text="${table.identifiant == null ? 'table.form.add' : 'table.form.edit'}"></h2>
+    <form th:action="@{${table.identifiant == null ? '/tables' : '/tables/' + ${table.identifiant}}}" method="post">
         <!-- Input caché pour l'ID lors de l'édition -->
         <input type="hidden" th:if="${table != null}" th:value="${table.identifiant}" name="id">
-
-        <div class="mb-3">
-            <label for="tableNumber" class="form-label" th:text="#{table.form.number}">Numéro de Table</label>
-            <input type="number" class="form-control" id="tableNumber" th:value="${table != null ? table.identifiant : ''}" name="identifiant" placeholder="Entrez le numéro de la table">
-        </div>
 
         <div class="mb-3">
             <label for="nbrPlace" class="form-label" th:text="#{table.form.places}">Nombre de Places</label>

@@ -11,15 +11,21 @@
 
 <!-- Formulaire Client -->
 <div class="container mt-5">
-    <h2 th:text="${client == null ? 'client.form.add' : 'client.form.edit'}"></h2>
-    <form th:action="@{${client == null ? '/clients' : '/clients/' + client.identifiant}}" method="post">
+    <h2 th:text="${client.identifiant == null ? 'client.form.add' : 'client.form.edit'}"></h2>
+    <form th:action="@{${client.identifiant == null ? '/clients' : '/clients/' + client.identifiant}}" method="post">
         <!-- Input caché pour l'ID lors de l'édition -->
         <input type="hidden" th:if="${client != null}" th:value="${client.identifiant}" name="id">
 
         <div class="mb-3">
-            <label for="clientName" class="form-label" th:text="#{client.form.name}">Nom</label>
+            <label for="clientFirstName" class="form-label" th:text="#{client.form.firstName}">Prenom</label>
+            <input type="text" class="form-control" id="clientFirstName" th:value="${client != null ? client.prenom : ''}" name="prenom" placeholder="Entrez le prenom du client">
+        </div>
+
+        <div class="mb-3">
+            <label for="clientName" class="form-label" th:text="#{client.form.lastname}">Nom</label>
             <input type="text" class="form-control" id="clientName" th:value="${client != null ? client.nom : ''}" name="nom" placeholder="Entrez le nom du client">
         </div>
+
 
         <div class="mb-3">
             <label for="clientEmail" class="form-label" th:text="#{client.form.email}">Email</label>

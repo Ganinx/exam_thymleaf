@@ -34,12 +34,11 @@ public class ClientController {
 
     // Créer une nouvelle client
     @PostMapping
-    public String createClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String createClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "client/form"; // Renvoyer à la vue avec les erreurs
         }
         clientService.save(client);
-        redirectAttributes.addFlashAttribute("message", "Client créée avec succès !");
         return "redirect:/clients";
     }
 
